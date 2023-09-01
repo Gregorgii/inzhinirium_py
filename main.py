@@ -37,14 +37,20 @@ class Game:
 
             if self.snake.is_dead() is True:
                 self.db.insert_score(self.nickname, self.snake.score)
-                text = font.render("Game Over. You can see rating in the command line", True, (255, 0, 0))
+                text = font.render("Game Over", True, (255, 0, 0))
                 text_rect = text.get_rect(center=(400, 300))
                 self.screen.blit(text, text_rect)
                 pygame.display.flip()
                 pygame.time.wait(2000)
-                self.is_running = False
+                self.screen.fill((0, 0, 0))
+                pygame.display.flip()
                 for i in range(len(self.db.get_top_scores())):
-                    print(i + 1, self.db.get_top_scores()[i])
+                    text = font.render(self.db.get_top_text(i), True, (255, 0, 0))
+                    text_rect = text.get_rect(center=(400, 100 * (2 + i/2)))
+                    self.screen.blit(text, text_rect)
+                    pygame.display.update()
+                pygame.time.wait(5000)
+                self.is_running = False
 
             if self.snake.score == 1000:
                 text = font.render("Winner-winner chicken dinner", True, (255, 0, 0))

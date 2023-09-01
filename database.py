@@ -17,3 +17,8 @@ class Database:
         self.cursor.execute("SELECT name, score FROM scores ORDER BY score DESC LIMIT 5")
         top_scores = self.cursor.fetchall()
         return top_scores
+
+    def get_top_text(self, nmbr):
+        text = ""
+        text += str(nmbr + 1) + " " + self.get_top_scores()[nmbr][0] + " " + str(self.get_top_scores()[nmbr][1])
+        return text
